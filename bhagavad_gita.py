@@ -303,7 +303,6 @@ if selected_options == 3:
     chap_no = selected_chapter
     verse_no = selected_verse
 
-sample_text()   # printing sampel text
 print()
 get_user_needs(user_needs)
 print()
@@ -365,7 +364,7 @@ while True:
 
             if selected_options == 3:
                 print("Done!!\nVerse", selected_verse, "from chapter",
-                      selected_chapter, "retrieved.")
+                      selected_chapter, "retrieved and saved into '" + filename + "' file.")
                 print('Bye!!')
                 exit()
         # Increasing the verse number by plus 1
@@ -375,13 +374,14 @@ while True:
     elif response_status == 404:
         if selected_options == 2:
             print("Done!!\nAll verse from chapter",
-                  selected_chapter, 'retrieved.')
+                  selected_chapter, "retrieved and saved into '" + filename + "' file.")
             print('Bye!!')
             exit()
         print("Retrieving from next Chapter!")
         chap_no += 1
         verse_no = 1
     if chap_no > 18:
-        print("Done!!\nALL 701 Verse of The Bhagvat Gita retrieved.")
+        print("Done!!\nALL 701 Verse of The Bhagvat Gita retrieved and saved into '" +
+              filename + "' file.")
         print('Bye!!')
         exit()
