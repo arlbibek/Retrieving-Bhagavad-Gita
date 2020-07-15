@@ -1,4 +1,4 @@
-# main.py
+# Bhagvat Geeet from web scrping
 
 '''
 verse_sa                :   Sanskrit Version Transliteration version"
@@ -8,9 +8,17 @@ verse_en                :   English translation
 verse_cmnt_en           :   Commentary
 verse_audio_sa          :   Audio version.
 '''
-
-from bs4 import BeautifulSoup
-import requests
+try:
+    from bs4 import BeautifulSoup
+except Exception:
+    print("You need ot install 'requests' module.\nSee 'requirement.txt'")
+    exit()
+try:
+    import requests
+except Exception:
+    print("You need ot install 'requests' module.\nSee 'requirement.txt'")
+    exit()
+import time
 
 filename = 'the_Bhagvhat_Gita.txt'
 f = open(filename, 'w')
@@ -34,6 +42,16 @@ user_needs['verse_en'] = ["English translation", 'y']
 user_needs['verse_cmnt_en'] = ["Commentary", 'y']
 user_needs['verse_audio_sa'] = ["Audio version", 'y']
 
+'''Checking if the host is up'''
+print('Checking if the host is online.\nPlease wait..')
+try:
+    response_status = requests.get("https://www.holy-bhagavad-gita.org/")
+    print('The host is UP!')
+except Exception:
+    print("Couldn't reach the HOST")
+    exit()
+
+
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -49,14 +67,14 @@ def sample_text():
     sample_txt['4'] = ["English translation",
                        "Dhritarashtra said: O Sanjay, after gathering on the holy field of Kurukshetra, and desiring to fight, what did my sons and the sons of Pandu do? "]
     sample_txt['5'] = ["Commentary", "The two armies had gathered on the battlefield of Kurukshetra, well prepared to fight a war that was inevitable. Still, in this verse, King Dhritarashtra asked Sanjay, what his sons and his brother Pandu’s sons were doing on the battlefield? It was apparent that they would fight, then why did he ask such a question?..."]
-    sample_txt['6'] = ["Audio version", ""]
+    sample_txt['6'] = ["Audio version", "Not Avaliable"]
 
     for key, values in sample_txt.items():
-        print(key + '. ' + values[0])
-        print('  +--' + values[1] + '\n')
+        print(values[0])
+        print('---')
+        print(values[1] + '\n')
+        time.sleep(0.5)
 
-
-# sample_text()
 
 def spd(x):
     if x == '!SPD':
@@ -67,8 +85,7 @@ def spd(x):
 def get_user_needs(un):
     for key, values in un.items():
         while True:
-            user_input = input('Do you want "' +
-                               values[0] + '"?(y/n)[default = y]: ')
+            user_input = input('Do you want "' + values[0] + '"?(y/n)[default = y]: ')
             spd(user_input)
             if user_input == 'y' or user_input == 'Y' or user_input == '':
                 un[key][1] = 'y'
@@ -142,10 +159,10 @@ def get_bg(article):
 
 def get_verse_en(article, chap_no, verse_no):
     '''Retrieving english tranlsation of the verse'''
-    bg = get_bg(article)
+    bg = get_bg(article)    # removing BG 0.0 from text
     try:
         verse_en = article.find(
-            'div', id="translation").text.strip().replace(bg, '')
+            'div', id="translation").text.strip().replace(bg, '').lstrip()
         # print(verse_en)
         return verse_en
     except Exception:
@@ -184,9 +201,9 @@ def get_verse_audio_sa():
 def get_selected_option():
     '''prividing options to user to retrive Everyting or Specific Chapter or a Specific Verse'''
     menu_options = {}
-    menu_options['1'] = "Everything(all 701 Verse)"
-    menu_options['2'] = "Specific Chapter"
-    menu_options['3'] = "Specific Verse"
+    menu_options['1'] = "Retrive: Everything [Total: 700 Verse]"
+    menu_options['2'] = "Retrive: All verse from a Chapter [Total: 18 Chapters]."
+    menu_options['3'] = "Retrive: Specific Verse from a Specific Chapter."
 
     chapter_verse_info = {'1': "47", '2': "72", '3': "43", '4': "42", '5': "29",
                           '6': "47", '7': "30", '8': "28", '9': "34", '10': "42",
@@ -194,8 +211,11 @@ def get_selected_option():
                           '16': "24", '17': "28", '18': "78"}
 
     while True:
+        time.sleep(0.2)
+        print("\nYou can do following things: \n")
         for entry in sorted(menu_options.keys()):
-            print(entry, menu_options[entry])
+            time.sleep(0.2)
+            print('\t', entry + '.', menu_options[entry])
 
         try:
             selected_options = input("\nChoose and option: ")
@@ -207,15 +227,13 @@ def get_selected_option():
 
         if selected_options == 1:
             # 1: Everything(all 701 Verse)
-            print('Option', selected_options,
-                  'Selected.\n+--Everything(all 701 Verse)')
+            print('\nOption', selected_options, ':', menu_options[str(selected_options)])
             return selected_options, 1, 1
             break
 
         elif selected_options == 2:
             # 2: Specific Chapter
-            print('Option', selected_options,
-                  'Selected.\n+--Specific Chapter')
+            print('\nOption', selected_options, ':', menu_options[str(selected_options)])
             while True:
                 try:
                     selected_chapter = input("\nWhich chapter?(1-18): ")
@@ -234,7 +252,7 @@ def get_selected_option():
 
         elif selected_options == 3:
             # 2: Specific verse (specific verse from specific verse)
-            print('Option', selected_options, 'Selected.\n+--Specific Verse')
+            print('\nOption', selected_options, ':', menu_options[str(selected_options)])
             while True:
                 try:
                     selected_chapter = input(
@@ -247,7 +265,7 @@ def get_selected_option():
 
                 if selected_chapter >= 1 and selected_chapter <= 18:
                     no_of_verse = chapter_verse_info[str(selected_chapter)]
-                    print('Chapter ', selected_chapter,
+                    print('\nChapter ', selected_chapter,
                           'has', no_of_verse, ' verse.')
                     while True:
                         try:
@@ -277,16 +295,6 @@ def get_selected_option():
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-'''Checking if the host is up'''
-
-try:
-    response_status = requests.get("https://www.holy-bhagavad-gita.org/")
-except Exception:
-    print("Couldn't reach the HOST")
-    exit()
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 selected_options, selected_chapter, selected_verse = get_selected_option()
 
 if selected_options == 2:
@@ -295,6 +303,7 @@ if selected_options == 3:
     chap_no = selected_chapter
     verse_no = selected_verse
 
+sample_text()   # printing sampel text
 print()
 get_user_needs(user_needs)
 print()
@@ -316,8 +325,6 @@ while True:
         webpage = requests.get(url).text
         soup = BeautifulSoup(webpage, 'lxml')
         article = soup.find('article')
-        print(article)
-        exit()
 
         # Writing the results in to a file.
         f = open(filename, 'a', encoding="utf-8")
@@ -335,30 +342,25 @@ while True:
             if user_needs['verse_sa'][1] == 'y':
                 verse_sa = get_verse_sa(article, chap_no, verse_no)
                 f.write(verse_sa)
-
-            f.write('\n')
+                f.write('\n')
             if user_needs['verse_literal_en'][1] == 'y':
                 verse_literal_en = get_verse_literal_en(
                     article, chap_no, verse_no)
                 f.write(verse_literal_en)
-
-            f.write('\n')
+                f.write('\n')
             if user_needs['verse_words_meaning_en'][1] == 'y':
                 verse_words_meaning_en = get_verse_words_meaning_en(
                     article, chap_no, verse_no)
                 f.write(verse_words_meaning_en)
-
-            f.write('\n')
+                f.write('\n')
             if user_needs['verse_en'][1] == 'y':
                 verse_en = get_verse_en(article, chap_no, verse_no)
                 f.write(verse_en)
-
-            f.write('\n')
+                f.write('\n')
             if user_needs['verse_cmnt_en'][1] == 'y':
                 verse_cmnt_en = get_verse_cmnt_en(article, chap_no, verse_no)
                 f.write(verse_cmnt_en)
-
-            f.write('\n')
+                f.write('\n')
             f.close
 
             if selected_options == 3:

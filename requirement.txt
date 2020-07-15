@@ -1,2 +1,7 @@
-BeautifulSoup
+beautifulsoup4
+
+    pip install beautifulsoup4
+
 requests
+
+    pip install requests
