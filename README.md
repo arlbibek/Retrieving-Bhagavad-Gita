@@ -17,6 +17,6 @@ Web Scraping and retrieving different chapters and verse of the Bhagvat Gita
 
         pip install requests
 
-**Run `bhagavad_gita.py` and retrive what you want!***
+**Run `bhagavad_gita.py` and retrive what you want!**
 .
 \# The End
