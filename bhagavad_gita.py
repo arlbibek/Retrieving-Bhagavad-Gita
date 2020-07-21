@@ -10,13 +10,9 @@ verse_audio_sa          :   Audio version.
 '''
 try:
     from bs4 import BeautifulSoup
-except Exception:
-    print("You need ot install 'requests' module.\nSee 'requirement.txt'")
-    exit()
-try:
     import requests
 except Exception:
-    print("You need ot install 'requests' module.\nSee 'requirement.txt'")
+    print("You need ot install 'beautifulsoup4' & 'requests' module.\nDo:\n\tpip install -r requirements.txt\n")
     exit()
 import time
 
