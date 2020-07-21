@@ -8,13 +8,24 @@ verse_en                :   English translation
 verse_cmnt_en           :   Commentary
 verse_audio_sa          :   Audio version.
 '''
+import time
 try:
     from bs4 import BeautifulSoup
     import requests
+    print('Requirements satsfied!')
 except Exception:
-    print("You need ot install 'beautifulsoup4' & 'requests' module.\nDo:\n\tpip install -r requirements.txt\n")
-    exit()
-import time
+    print('Requirements unsatsfied!')
+    print("Installing 'beautifulsoup4' & 'requests' module.")
+    try:
+        from subprocess import Popen
+        # Runing install_requirements.bat to install 'beautifulsoup4' & 'requests'
+        p = Popen("install_requirements.bat")
+        stdout, stderr = p.communicate()
+        print("'beautifulsoup4' & 'requests' has been instlled run the program again")
+    except Exception:
+        print("Do:\n\tpip install -r requirements.txt")
+        input("Press Enter to exit..")
+        exit()
 
 filename = 'the_Bhagvhat_Gita.txt'
 f = open(filename, 'w')
