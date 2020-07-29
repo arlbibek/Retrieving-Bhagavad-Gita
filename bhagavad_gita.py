@@ -1,6 +1,6 @@
 # Bhagvat Geeet from web scrping
 
-'''
+'''Addtional Info
 verse_sa                :   Sanskrit Version Transliteration version"
 verse_literal_en        :   Exact meaning of the transliterated
 verse_words_meaning_en  :   Exact meaning of the transliterated words.
