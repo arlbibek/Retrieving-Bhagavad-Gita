@@ -9,6 +9,7 @@ Web Scraping and retrieving different chapters and verse of the Holy Bhagvat Git
 ---
 ## Usage
 + Install `beautifulsoup4` & `requests` python modules.
+
 `pip install -r requirements.txt`
 
 + Run `bhagavad_gita.py` and retrive what you want!
