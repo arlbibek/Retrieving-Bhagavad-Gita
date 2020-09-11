@@ -1,393 +1,121 @@
-# Bhagvat Geeet from web scrping
-
-'''Addtional Info
-verse_sa                :   Sanskrit Version Transliteration version"
-verse_literal_en        :   Exact meaning of the transliterated
-verse_words_meaning_en  :   Exact meaning of the transliterated words.
-verse_en                :   English translation
-verse_cmnt_en           :   Commentary
-verse_audio_sa          :   Audio version.
-'''
-import time
 try:
     from bs4 import BeautifulSoup
     import requests
-    print('Requirements satsfied!')
+    print('Requirement satisfied!')
 except ImportError:
-    print('Requirements unsatsfied!')
-    print("Installing 'beautifulsoup4' & 'requests' module.")
-    print("Do:\n\tpip install -r requirements.txt")
+    print('Requirement unsatisfied!')
+    print("Do 'pip install -r requirements.txt'")
     exit()
 
-'''Hello World'''
+import myfunctions as fn
 
+'''Initial Variables'''
+# Main URL from where we are retrieving data.
+main_url = "https://www.holy-bhagavad-gita.org"
 
-'''creating an empty text file'''
+# Chapter and verse information i.e Chapter Number: Verse Count
+info = {1: 47, 2: 72, 3: 43, 4: 42, 5: 29, 6: 47, 7: 30, 8: 28, 9: 34,
+        10: 42, 11: 55, 12: 20, 13: 35, 14: 27, 15: 20, 16: 24, 17: 28, 18: 78}
 
-filename = 'the_Bhagvhat_Gita.txt'
-f = open(filename, 'w')
-f.write("Bhagavad Gita, The Song of God\n")
-f.write("******************************\n")
-f.close
+# Default Chapter and Verse number
+chapter_num = verse_num = 1
 
+selected_option, selected_chapter, selected_verse = fn.get_option(info)
+include_addt = fn.include_extra()
 
-# setting default option, chapter and verse numbers
-chap_no = 1
-verse_no = 1
-selected_options = 1
+# Getting file name from the user
+filename = fn.get_filename()
+unique_urls = list()  # To Exclude repetitive URLs
+unique_chapter = list()
 
-# used needs
-user_needs = {}
-user_needs['verse_sa'] = ["Sanskrit Version", 'y']
-user_needs['verse_literal_en'] = ["Transliteration version", 'y']
-user_needs['verse_words_meaning_en'] = [
-    "Exact meaning of the transliterated words", 'y']
-user_needs['verse_en'] = ["English translation", 'y']
-user_needs['verse_cmnt_en'] = ["Commentary", 'y']
-user_needs['verse_audio_sa'] = ["Audio version", 'y']
+# For debugging
+# selected_option = 5
+# selected_chapter = 1
+# selected_verse = 4
 
+if selected_option == 4:
+    chapter_num = selected_chapter
+if selected_option == 5:
+    chapter_num = selected_chapter
+    verse_num = selected_verse
 
-'''Checking if the host is up'''
+# Creating a new text file with additional headers to append retrieved data later.
+with open(filename, 'wt', encoding="UTF-8") as fh:
+    fh.write("Bhagavad Gita, The Song of God\n")
+    fh.write("==============================\n")
 
-print('Checking if the host is online.\nPlease wait..')
+'''Main'''
+print('Please wait..')
 try:
-    response_status = requests.get("https://www.holy-bhagavad-gita.org/")
-    print('The host is UP!')
-except Exception:
-    print("Couldn't reach the HOST")
-    exit()
-
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-def sample_text():
-    '''Sample printing'''
-    sample_txt = {}
-    sample_txt['1'] = ["Sanskrit version",
-                       "धृतराष्ट्र उवाच | धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः | मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ||1|| "]
-    sample_txt['2'] = ["Transliteration version",
-                       "dhṛitarāśhtra uvācha dharma-kṣhetre kuru-kṣhetre samavetā yuyutsavaḥ māmakāḥ pāṇḍavāśhchaiva kimakurvata sañjaya"]
-    sample_txt['3'] = ["Exact meaning of the transliterated words",
-                       "dhṛitarāśhtraḥ uvācha—Dhritarashtra said; dharma-kṣhetre—the land of dharma; kuru-kṣhetre—at Kurukshetra; samavetāḥ—having gathered; yuyutsavaḥ—desiring to fight; māmakāḥ—my sons; pāṇḍavāḥ—the sons of Pandu; cha—and; eva—certainly; kim—what; akurvata—did they do; sañjaya—Sanjay "]
-    sample_txt['4'] = ["English translation",
-                       "Dhritarashtra said: O Sanjay, after gathering on the holy field of Kurukshetra, and desiring to fight, what did my sons and the sons of Pandu do? "]
-    sample_txt['5'] = ["Commentary", "The two armies had gathered on the battlefield of Kurukshetra, well prepared to fight a war that was inevitable. Still, in this verse, King Dhritarashtra asked Sanjay, what his sons and his brother Pandu’s sons were doing on the battlefield? It was apparent that they would fight, then why did he ask such a question?..."]
-    sample_txt['6'] = ["Audio version", "Not Avaliable"]
-
-    for key, values in sample_txt.items():
-        print(values[0])
-        print('---')
-        print(values[1] + '\n')
-        time.sleep(0.5)
-
-
-def spd(x):
-    if x == '!SPD':
-        print('Emergency Exit!!')
-        exit()
-
-
-def get_user_needs(un):
-    for key, values in un.items():
-        while True:
-            user_input = input('Do you want "' + values[0] + '"?(y/n)[default = y]: ')
-            spd(user_input)
-            if user_input == 'y' or user_input == 'Y' or user_input == '':
-                un[key][1] = 'y'
-                break
-            elif user_input == 'n' or user_input == 'N':
-                un[key][1] = 'n'
-                break
-            else:
-                print("Wrong input.Pless enter 'y' for 'yes' and 'n' for 'no'")
-                continue
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-def get_verse_title(article, chap_no, verse_no):
-    '''Title: Chapter number and Verse number'''
-    try:
-        verse_title = article.h1.text
-        return verse_title
-    except Exception:
-        verse_title = "HEADING NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-        return verse_title
-
-
-def get_verse_sa(article, chap_no, verse_no):
-    '''Retrieving Sanskrit version of the verse'''
-    try:
-        verse_sa = article.find(
-            'div', id="originalVerse").text.strip()
-        return verse_sa
-    except Exception:
-        verse_sa = "SANSKRIT VERSION NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-        return verse_sa
-
-
-def get_verse_literal_en(article, chap_no, verse_no):
-    '''Retrieving transliteration version of the verse'''
-    try:
-        verse_literal_en = article.find('div', id="transliteration").text
-        # print(verse_literal_en)
-        return verse_literal_en
-    except Exception:
-        verse_literal_en = "SANSKRIT VERSION NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-        return verse_literal_en
-
-
-def get_verse_words_meaning_en(article, chap_no, verse_no):
-    '''Retrieving meaning of the transliteration version of the words in english'''
-    try:
-        verse_words_meaning_en = article.find('div', id="wordMeanings").text.replace(
-            '; ', '\n').replace('—', ' — ').strip()
-        # print(verse_words_meaning_en)
-        return verse_words_meaning_en
-    except Exception:
-        verse_words_meaning_en = "WORDS MEANING NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-        return verse_words_meaning_en
-
-
-def get_bg(article):
-    # this removes BG. 1.1 from eng translation.
-    try:
-        bg = article.find('div', id="translation").span.text
-    except Exception:
-        bg = ""
-    return bg
-
-
-def get_verse_en(article, chap_no, verse_no):
-    '''Retrieving english tranlsation of the verse'''
-    bg = get_bg(article)    # removing BG 0.0 from text
-    try:
-        verse_en = article.find(
-            'div', id="translation").text.strip().replace(bg, '').lstrip()
-        # print(verse_en)
-        return verse_en
-    except Exception:
-        verse_en = "ENGLISH VERSION NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-        return verse_en
-
-
-def get_verse_cmnt_en(article, chap_no, verse_no):
-    '''Retrieving commentary on the verse'''
-    try:
-        verse_cmnt_en = article.find('div', id="commentary").text.rstrip()
-        # print(verse_cmnt_en)
-        return verse_cmnt_en
-    except Exception:
-        verse_cmnt_en = "COMMENTARY NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-        return verse_cmnt_en
-
-
-def get_verse_audio_sa():
-    '''Retrieving sanskrit audio versoin of the verse'''
-    try:
-        # SOME TASK
-        # SOME TASK
-        # SOME TASK
-        verse_audio_sa = "Sorry audio vesion of the verse is not avaliable at the movement."
-        return verse_audio_sa
-    except Exception:
-        verse_audio_sa = "AUDIo VERSION NOT FOUND for chapter " + \
-            str(chap_no) + " verse " + str(verse_no) + "."
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-def get_selected_option():
-    '''prividing options to user to retrive Everyting or Specific Chapter or a Specific Verse'''
-    menu_options = {}
-    menu_options['1'] = "Retrive: Everything [Total: 700 Verse]"
-    menu_options['2'] = "Retrive: All verse from a Chapter [Total: 18 Chapters]."
-    menu_options['3'] = "Retrive: Specific Verse from a Specific Chapter."
-
-    chapter_verse_info = {'1': "47", '2': "72", '3': "43", '4': "42", '5': "29",
-                          '6': "47", '7': "30", '8': "28", '9': "34", '10': "42",
-                          '11': "55", '12': "20", '13': "35", '14': "27", '15': "20",
-                          '16': "24", '17': "28", '18': "78"}
-
     while True:
-        time.sleep(0.2)
-        print("\nYou can do following things: \n")
-        for entry in sorted(menu_options.keys()):
-            time.sleep(0.2)
-            print('\t', entry + '.', menu_options[entry])
+        if chapter_num > 18: break
+        url = f"{main_url}/chapter/{chapter_num}/verse/{verse_num}/"
+        resp = requests.get(url)
+        if resp.status_code == 200:
+            url = resp.url
+            if url not in unique_urls:
+                print(f"Retrieving: {url}")
+                unique_urls.append(url)
+                html_doc = requests.get(url).text
+                soup = BeautifulSoup(html_doc, 'html.parser')
 
-        try:
-            selected_options = input("\nChoose and option: ")
-            spd(selected_options)
-            selected_options = int(selected_options)
-        except Exception:
-            print("\nPlease choose (1,2 or 3).\n")
-            continue
+                # Returns all the contains of the tag article; (i.e verse_title, verse_sa, verse_en and such...)
+                article = soup.find('article')
 
-        if selected_options == 1:
-            # 1: Everything(all 701 Verse)
-            print('\nOption', selected_options, ':', menu_options[str(selected_options)])
-            return selected_options, 1, 1
-            break
+                # Returns contains of the div containing Chapter Title; Such as 'Chapter 1 Verse 3'
+                breadcrum = soup.find('div', id="breadcrumb")
+                print('Done!')
 
-        elif selected_options == 2:
-            # 2: Specific Chapter
-            print('\nOption', selected_options, ':', menu_options[str(selected_options)])
-            while True:
-                try:
-                    selected_chapter = input("\nWhich chapter?(1-18): ")
-                    spd(selected_chapter)
-                    selected_chapter = int(selected_chapter)
-                except Exception:
-                    print("\n(2a)**Invalid Input.**\n")
-                    continue
-                if selected_chapter >= 1 and selected_chapter <= 18:
-                    return selected_options, selected_chapter, 1
+                # Writing retrieved data into text file.
+                chap_title = fn.getC_title(breadcrum, chapter_num)
+                verse_title = fn.getV_title(article)
+                originalVerse = fn.get_originalVerse(article)
+                translation_en = fn.get_translation(article)
+                wordMeanings_en = fn.get_wordMeanings_en(article)
+                translation_en = fn.get_translation_en(article)
+                commentary_en = fn.get_commentary_en(article)
+
+                with open(filename, 'at', encoding="UTF-8") as fh:
+                    if chap_title not in unique_chapter:
+                        fh.write(f'\n{fn.drawline(len(chap_title))}\n')
+                        unique_chapter.append(chap_title)
+                        fh.write(f'## {chap_title}\n\n')
+                    fh.write(f'{verse_title}\n')
+                    fh.write(f'{fn.drawline(len(verse_title))}\n')
+                    fh.write(f'### {originalVerse}\n\n')
+                    if include_addt:
+                        fh.write(f'> {translation_en}\n')
+                        fh.write(f'> ---\n')
+                        fh.write(f'> - {wordMeanings_en}\n\n')
+                    fh.write(f'### {translation_en}\n\n')
+                    if include_addt:
+                        fh.write(f'{commentary_en}\n\n')
+
+                if selected_option == 5:
+                    print(
+                        f'\nRetrieved verse {verse_num} from Chapter {chapter_num}')
+                    print(f'File saved as {filename} on local folder.')
                     break
-                else:
-                    print("\nPlease choose an interger in range (1 - 18).\n")
-                    continue
-            break
 
-        elif selected_options == 3:
-            # 2: Specific verse (specific verse from specific verse)
-            print('\nOption', selected_options, ':', menu_options[str(selected_options)])
-            while True:
-                try:
-                    selected_chapter = input(
-                        "\nSpecific Verse form which chapter?(1-18): ")
-                    spd(selected_chapter)
-                    selected_chapter = int(selected_chapter)
-                except Exception:
-                    print("\n(3a)**Invalid Input.**\n")
-                    continue
+            # Increasing verse number for each iteration
+            verse_num += 1
+        elif resp.status_code == 404:
+            # Breaking out after retrieving single chapter as per the user request
+            if selected_option == 4:
+                print(
+                    f'\nRetrieved all {info[chapter_num]} verses from Chapter {chapter_num}')
+                print(f'File saved as {filename} on local folder.')
+                break
+            # Increasing chapter number by and and resetting verse number to 1. When encountering 404 Not Found
+            chapter_num += 1
+            verse_num = 1
+except KeyboardInterrupt:
+    fn.end('Abort!')
 
-                if selected_chapter >= 1 and selected_chapter <= 18:
-                    no_of_verse = chapter_verse_info[str(selected_chapter)]
-                    print('\nChapter ', selected_chapter,
-                          'has', no_of_verse, ' verse.')
-                    while True:
-                        try:
-                            selected_verse = input(
-                                "\nChoose a verse no?(1 - " + no_of_verse + "): ")
-                            spd(selected_verse)
-                            selected_verse = int(selected_verse)
-                        except Exception:
-                            print("\n(3b)**Invalid Input.**\n")
-                            continue
-                        if selected_verse >= 1 and selected_verse <= int(no_of_verse):
-                            return selected_options, selected_chapter, selected_verse
-                            break
-                        else:
-                            print(
-                                "\nPlease choose an interger in range (1 - " + no_of_verse + "): ")
-                            continue
-                    break
-                else:
-                    print("\nPlease choose an interger in range (1 - 18).\n")
-                    continue
-            break
-        else:
-            print("\nPlease choose (1,2 or 3).\n")
-            continue
+with open(filename, 'at', encoding="UTF-8") as en: en.write("\\# The End.")
+if selected_option == 3:
+    print(f'Retrieved all {sum(info.values())} verses from 18 chapters.')
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+fn.end("")
 
-
-selected_options, selected_chapter, selected_verse = get_selected_option()
-
-if selected_options == 2:
-    chap_no = selected_chapter
-if selected_options == 3:
-    chap_no = selected_chapter
-    verse_no = selected_verse
-
-print()
-get_user_needs(user_needs)
-print()
-for key, values in user_needs.items():
-    print('Retrieving Status for ' + values[0] + ': ' + values[1])
-print()
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-'''This is where the actual things happen'''
-url_list = []
-while True:
-    url = "https://www.holy-bhagavad-gita.org/chapter/" + \
-        str(chap_no) + "/verse/" + str(verse_no)
-    print('Retrieving: ', url)
-    response_status = requests.get(url).status_code
-    print('Response Status: ', response_status)
-    if response_status == 200:
-        webpage = requests.get(url).text
-        soup = BeautifulSoup(webpage, 'lxml')
-        article = soup.find('article')
-
-        # Writing the results in to a file.
-        f = open(filename, 'a', encoding="utf-8")
-        if get_bg(article) not in url_list:
-            url_list.append(get_bg(article))
-
-            # Calling functions and writing into the text file
-
-            f.write('\n')
-            verse_title = get_verse_title(article, chap_no, verse_no)
-            f.write('-------------------------------\n')
-            f.write(verse_title + '\n')
-
-            f.write('\n')
-            if user_needs['verse_sa'][1] == 'y':
-                verse_sa = get_verse_sa(article, chap_no, verse_no)
-                f.write(verse_sa)
-                f.write('\n')
-            if user_needs['verse_literal_en'][1] == 'y':
-                verse_literal_en = get_verse_literal_en(
-                    article, chap_no, verse_no)
-                f.write(verse_literal_en)
-                f.write('\n')
-            if user_needs['verse_words_meaning_en'][1] == 'y':
-                verse_words_meaning_en = get_verse_words_meaning_en(
-                    article, chap_no, verse_no)
-                f.write(verse_words_meaning_en)
-                f.write('\n')
-            if user_needs['verse_en'][1] == 'y':
-                verse_en = get_verse_en(article, chap_no, verse_no)
-                f.write(verse_en)
-                f.write('\n')
-            if user_needs['verse_cmnt_en'][1] == 'y':
-                verse_cmnt_en = get_verse_cmnt_en(article, chap_no, verse_no)
-                f.write(verse_cmnt_en)
-                f.write('\n')
-            f.close
-
-            if selected_options == 3:
-                print("Done!!\nVerse", selected_verse, "from chapter",
-                      selected_chapter, "retrieved and saved into '" + filename + "' file.")
-                print('Bye!!')
-                exit()
-        # Increasing the verse number by plus 1
-        verse_no += 1  # increasing verse no to go to next verse
-        print("Sucess!")
-        # break
-    elif response_status == 404:
-        if selected_options == 2:
-            print("Done!!\nAll verse from chapter",
-                  selected_chapter, "retrieved and saved into '" + filename + "' file.")
-            print('Bye!!')
-            exit()
-        print("Retrieving from next Chapter!")
-        chap_no += 1
-        verse_no = 1
-    if chap_no > 18:
-        print("Done!!\nALL 701 Verse of The Bhagvat Gita retrieved and saved into '" +
-              filename + "' file.")
-        print('Bye!!')
-        exit()
+# The End.
