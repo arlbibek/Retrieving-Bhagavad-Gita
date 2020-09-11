@@ -69,7 +69,7 @@ try:
                 chap_title = fn.getC_title(breadcrum, chapter_num)
                 verse_title = fn.getV_title(article)
                 originalVerse = fn.get_originalVerse(article)
-                translation_en = fn.get_translation(article)
+                transliteration = fn.get_transliteration(article)
                 wordMeanings_en = fn.get_wordMeanings_en(article)
                 translation_en = fn.get_translation_en(article)
                 commentary_en = fn.get_commentary_en(article)
@@ -83,7 +83,7 @@ try:
                     fh.write(f'{fn.drawline(len(verse_title))}\n')
                     fh.write(f'### {originalVerse}\n\n')
                     if include_addt:
-                        fh.write(f'> {translation_en}\n')
+                        fh.write(f'> {transliteration}\n')
                         fh.write(f'> ---\n')
                         fh.write(f'> - {wordMeanings_en}\n\n')
                     fh.write(f'### {translation_en}\n\n')

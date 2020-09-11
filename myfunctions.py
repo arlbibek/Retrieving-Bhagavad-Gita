@@ -125,7 +125,7 @@ def get_originalVerse(html):
     except Exception: return "SANSKRIT VERSION NOT FOUND."
 
 
-def get_translation(html):
+def get_transliteration(html):
     """Extract transliteration version of the verse"""
     try:
         return html.find('div', id="transliteration").text.strip()
