@@ -1,8 +1,6 @@
 """All the function used in: Retrieving Bhagvat Gita from web-scraping"""
 import time
 
-main_url = ""
-
 # START: Dynamic functions #
 # Functions than can be used in other programs as well (with few modifications of course).
 
@@ -30,7 +28,8 @@ def clear_screen():
 
 def get_filename():
     """Returns filename with extension (.txt or .md)"""
-    print('What do you want to name your output file?[Default = Bhagavad Gita.md]')
+    print(
+        'What do you want to name your output file?[Default = Bhagavad Gita.md]')
     while True:
         try:
             filename = input(
@@ -88,19 +87,20 @@ def include_extra():
     '''Returns True if users want to write additional content to the output file; False otherwise.'''
     print("""
 Do your want to write the following to the output file as well?
-- Transliteration: Transliteration of the Original Verse
-- Words Meaning: Exact meaning of the transliterated words
-- Commentary: Extensive explanation of the verse.
-Original Verse and it's English translation is included by default.""")
+    - Transliteration: Transliteration of the Original Verse
+    - Words Meaning: Exact meaning of the transliterated words
+    - Commentary: Extensive explanation of the verse.
+    * Original Verse and it's English translation is included by default.
+""")
     while True:
         try:
             include = input('Enter here (y/n)[Return = No]: ').title()
-            if len(include) < 1 or include in ['Y', 'Yes']:
-                print(f'{include}: [OK] will write Everything.')
+            if include in ['Y', 'Yes']:
+                print(f'[OK] will write Everything.\n')
                 return True
-            elif include in ['N', 'No']:
+            elif len(include) < 1 or include in ['N', 'No']:
                 print(
-                    f"{include}: [OK] will write Original verse and it's English translation only.")
+                    f"[OK] will write Original verse and it's English translation only.\n")
                 return False
             print("Enter 'y' for 'Yes' or 'n' for 'no'")
         except KeyboardInterrupt: end('Abort!')
@@ -285,6 +285,7 @@ def get_retrieving_info(option, info):
 def end(msg=''):
     '''Exiting with'''
     print(msg)
+    time.sleep(1)
     line = drawline(54, '_')
     print(line)
     print('For more check out: https://www.holy-bhagavad-gita.org\n*')

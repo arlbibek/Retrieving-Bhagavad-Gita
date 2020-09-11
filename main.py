@@ -1,7 +1,6 @@
 try:
     from bs4 import BeautifulSoup
     import requests
-    print('Requirement satisfied!')
 except ImportError:
     print('Requirement unsatisfied!')
     print("Do 'pip install -r requirements.txt'")
