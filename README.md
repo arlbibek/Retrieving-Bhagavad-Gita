@@ -49,20 +49,20 @@ I was bored and wanted to read The Bhagavad Gita.
 
 #### Code in Action
 
-![](https://imgur.com/Rq5t5qp "Screenshot.")
+![](media/code-in-action-pic.png "Screenshot.")
 
 
 #### Sample output file in Markdown file format
 
-![](https://imgur.com/3owM5vk "Screenshot of output file in markdown format.")
+![](media/markdown-less.png "Screenshot of output file in markdown format.")
 
-![](https://imgur.com/Vs3MEcK "Screenshot of output file in markdown format.")
+![](media/markdown-more.png "Screenshot of output file in markdown format.")
 
 #### Sample output file in Text file format
 
-![](https://imgur.com/Uif4LUn "Screenshot of output file in text format.")
+![](media/text-less.png "Screenshot of output file in text format.")
 
-![](https://imgur.com/RkLPXfM "Screenshot of output file in text format.")
+![](media/text-more.png "Screenshot of output file in text format.")
 
 ## To Do
 - [ ] Add Read Me
