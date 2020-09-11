@@ -64,8 +64,8 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ![](media/text-more.png "Screenshot of output file in text format.")
 
-## To Do
-- [ ] Add Read Me
+## What's Comming
+- [ ] Read Me
 - [ ] Download Original verse audio
 - [ ] Verse for the day
 
