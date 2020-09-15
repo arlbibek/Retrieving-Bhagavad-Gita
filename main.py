@@ -16,14 +16,31 @@ main_url = "https://www.holy-bhagavad-gita.org"
 info = {1: 47, 2: 72, 3: 43, 4: 42, 5: 29, 6: 47, 7: 30, 8: 28, 9: 34,
         10: 42, 11: 55, 12: 20, 13: 35, 14: 27, 15: 20, 16: 24, 17: 28, 18: 78}
 
+# list of all available
+options = {}
+options[1] = "Read Me"
+options[2] = "Sample"
+options[3] = f"Retrieve: Everything - {sum(info.values())} verses"
+options[4] = f"Retrieve: All Verses from a chapter - {len(info.keys())} chapters"
+options[5] = "Retrieve: Specific Verse from a specific chapter"
+options[6] = "Random Quote"
+options[7] = "Exit"
+
+
 # Default Chapter and Verse number
 chapter_num = verse_num = 1
 
-selected_option, selected_chapter, selected_verse = fn.get_option(info)
-include_addt = fn.include_extra()
+selected_option, selected_chapter, selected_verse = fn.get_option(
+    info, options)
+if not selected_option == 6:
+    include_addt = fn.include_extra()
+    # Getting file name from the user
+    filename = fn.get_filename()
+    # Creating a new text file with additional headers to append retrieved data later.
+    with open(filename, 'wt', encoding="UTF-8") as fh:
+        fh.write("Bhagavad Gita, The Song of God\n")
+        fh.write("==============================\n")
 
-# Getting file name from the user
-filename = fn.get_filename()
 unique_urls = list()  # To Exclude repetitive URLs
 unique_chapter = list()
 
@@ -32,16 +49,11 @@ unique_chapter = list()
 # selected_chapter = 1
 # selected_verse = 4
 
-if selected_option == 4:
+if selected_option == 4:    # Options Reterive Specific Chapter
     chapter_num = selected_chapter
-if selected_option == 5:
+if selected_option in [5, 6]:    # Options Reterive Specific Verse and Print random verse
     chapter_num = selected_chapter
     verse_num = selected_verse
-
-# Creating a new text file with additional headers to append retrieved data later.
-with open(filename, 'wt', encoding="UTF-8") as fh:
-    fh.write("Bhagavad Gita, The Song of God\n")
-    fh.write("==============================\n")
 
 '''Main'''
 print('Please wait..')
@@ -73,6 +85,12 @@ try:
                 wordMeanings_en = fn.get_wordMeanings_en(article)
                 translation_en = fn.get_translation_en(article)
                 commentary_en = fn.get_commentary_en(article)
+                if selected_option == 6:
+                    fn.clear_screen()
+                    print(verse_title)
+                    print(translation_en)
+                    fn.pause()
+                    exit('Bye..')
 
                 with open(filename, 'at', encoding="UTF-8") as fh:
                     if chap_title not in unique_chapter:
@@ -109,12 +127,13 @@ try:
             chapter_num += 1
             verse_num = 1
 except KeyboardInterrupt:
-    fn.end('Abort!')
+    exit('Abort!')
 
-with open(filename, 'at', encoding="UTF-8") as en: en.write("\\# The End.")
-if selected_option == 3:
-    print(f'Retrieved all {sum(info.values())} verses from 18 chapters.')
+if not selected_option == 6:
+    with open(filename, 'at', encoding="UTF-8") as en: en.write("\\# The End.")
+    if selected_option == 3:
+        print(f'Retrieved all {sum(info.values())} verses from 18 chapters.')
 
-fn.end("")
+exit('Bye..')
 
 # The End.

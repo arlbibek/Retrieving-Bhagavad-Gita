@@ -41,7 +41,7 @@ def get_filename():
             print("Enter file extension (.txt or .md) as well.")
             print(
                 "  .txt for Text file\n  .md  for Markdown file*")
-        except KeyboardInterrupt: end('Abort!')
+        except KeyboardInterrupt: exit('Abort!')
         except EOFError: continue
 
 
@@ -103,7 +103,7 @@ Do your want to write the following to the output file as well?
                     f"[OK] will write Original verse and it's English translation only.\n")
                 return False
             print("Enter 'y' for 'Yes' or 'n' for 'no'")
-        except KeyboardInterrupt: end('Abort!')
+        except KeyboardInterrupt: exit('Abort!')
 
 
 def getC_title(html, chap_num):
@@ -168,17 +168,9 @@ def get_audio_sa():
     # SOME TASK
 
 
-def get_option(info):
+def get_option(info, options):
     """Returns (Selected Options, Chapter Number and Verse Number)"""
     # Note: This function calls an sub function called get_retrieving_info() itself
-    options = {}
-    options[1] = "Read Me"
-    options[2] = "Sample"
-    options[3] = f"Retrieve: Everything - {sum(info.values())} verses"
-    options[4] = f"Retrieve: All Verses from a chapter - {len(info.keys())} chapters"
-    options[5] = "Retrieve: Specific Verse from a specific chapter"
-    options[7] = "Exit"
-
     msg = ""
     while True:
         print(f'{msg}')
@@ -199,7 +191,7 @@ def get_option(info):
             # Option: Exit
             if user_input == 7:
                 time.sleep(0.7)
-                end('Exiting..')
+                exit('Exiting..')
 
             # Read Me
             elif user_input == 1:
@@ -215,7 +207,9 @@ def get_option(info):
             elif user_input in [3, 4, 5]:
                 return get_retrieving_info(user_input, info)
                 break
-        except KeyboardInterrupt: end('Abort!')
+            elif user_input == 6:
+                return randChapterVerse(user_input, info)
+        except KeyboardInterrupt: exit('Abort!')
         except EOFError:
             msg = "Enter 'CTRL + C' to exit."
             continue
@@ -266,14 +260,14 @@ def get_retrieving_info(option, info):
                             print(f"Enter value in range {verse_range}")
                             continue
                         return option, chap_opt, verse_opt
-                    except KeyboardInterrupt: end('Abort!')
+                    except KeyboardInterrupt: exit('Abort!')
                     except EOFError:
                         print("Enter 'CTRL + C' to exit.")
                         continue
                     except ValueError:
                         print('Error: Please enter a valid integer value.')
                         continue
-            except KeyboardInterrupt: end('Abort!')
+            except KeyboardInterrupt: exit('Abort!')
             except EOFError:
                 print("Enter 'CTRL + C' to exit.")
                 continue
@@ -282,23 +276,19 @@ def get_retrieving_info(option, info):
                 continue
 
 
-def end(msg=''):
-    '''Exiting with'''
-    print(msg)
-    time.sleep(1)
-    line = drawline(54, '_')
-    print(line)
-    print('For more check out: https://www.holy-bhagavad-gita.org\n*')
-    print('Made with ❤ by Bibek Aryal')
-    print('GitHub: https://github.com/arlbibek')
-    print('Source Code at: https://github.com/arlbibek/Retrieving-Bhagavad-Gita')
-    print(drawline(68))
-    exit('Bye! :)')
-
-
 # END: Static functions #
 
-if __name__ == "__main__":
-    print("Run 'main.py'")
+# if __name__ == "__main__":
+#     print("Run 'main.py'")
 
-# The End
+# # The End
+
+
+def randChapterVerse(opt, info):
+    '''Returns Random Chapter number, Verse number'''
+    import random
+    '''random quote'''
+    chapter = [k for k in info.keys()]
+    randChapter = random.randrange(1, len(chapter) + 1)
+    randVerse = random.randrange(1, info[randChapter] + 1)
+    return opt, randChapter, randVerse

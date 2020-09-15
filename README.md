@@ -7,9 +7,9 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ## Usage
 
-### Install Python 3 (Duh!)
+### Install Python 3.6 or higher (Duh!)
 
-*Go to python [Download Page](https://www.python.org/downloads/ "Go to python download page.").*
+*Go to python [Download Page](https://www.python.org/downloads/ "Go to python download page to download the latest version of python.").*
 
 ### 1. Install requirements
 
@@ -26,10 +26,12 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ## Feature List
 
-- You could choose among three options:
-    1. Retrieve: Everything - All 700 verses
-    2. Retrieve: A single chapter - All verses from selected chapter
-    3. Retrieve: Specific verse from a specific chapter
+- You could choose among different options such as:
+    + Retrieve: Everything - All 700 verses
+    + Retrieve: A single chapter - All verses from selected chapter
+    + Retrieve: Specific verse from a specific chapter
+    + Retrieve and print a random quote.
+    + And More..
 - Choose to save output file in:
     - Markdown (.md) format (Recommended)
     - Or text (.txt) format
@@ -38,11 +40,11 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ## What's New
 
-- The re-wrote code from scratch
+- The re-wrote all code from scratch
 - More readable and understandable code then before.
 - Moved all the functions to separate file *(myfunctions.py)*
-- Menu is now more clean and has more options.
-- Should work in Linux and OS X as well *(Not Tested)*
+- Menu now is even cleaner and has more options.
+- Should work in Linux and OS X *(Not Tested)* as well.
 - Your won't ever see an traceback.
 
 ## Screen-shots
@@ -65,10 +67,8 @@ I was bored and wanted to read The Bhagavad Gita.
 ![](media/text-more.png "Screenshot of output file in text format.")
 
 ## What's Coming
-- [ ] Read Me
+- [ ] Add to program Read Me
 - [ ] Download Original verse audio
-- [ ] Verse for the day
-
 
 ---
 \# The End.
