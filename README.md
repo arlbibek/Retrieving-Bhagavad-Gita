@@ -7,7 +7,7 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ## Usage
 
-### Install Python 3.6 or higher (Duh!)
+### Install Python 3.6 or higher.
 
 *Go to python [Download Page](https://www.python.org/downloads/ "Go to python download page to download the latest version of python.").*
 
@@ -15,10 +15,11 @@ I was bored and wanted to read The Bhagavad Gita.
 
         pip install -r requirements.txt
 
-- [x] BeautifulSoup4
-- [x] Requests
-- [ ] ~~lxml~~
+>*PIP is a cross-platform package manager for installing and managing Python packages (which can be found in the Python Package Index)*
 
+The above command will install following pacakages.
+- BeautifulSoup4
+- Requests
 
 ### 2. Run `main.py` and follow along
 
@@ -26,33 +27,31 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ## Feature List
 
-- You could choose among different options such as:
+- You could choose among different options:
     + Retrieve: Everything - All 700 verses
     + Retrieve: A single chapter - All verses from selected chapter
     + Retrieve: Specific verse from a specific chapter
-    + Retrieve and print a random quote.
-    + And More..
-- Choose to save output file in:
+    + Retrieve and display a random quote & more..
+- You could choose to save output file in:
     - Markdown (.md) format (Recommended)
     - Or text (.txt) format
 - CTRL + C (^C) will terminate and abort the program in any given time
-- And more
+- And more..
 
 ## What's New
 
-- The re-wrote all code from scratch
-- More readable and understandable code then before.
-- Moved all the functions to separate file *(myfunctions.py)*
-- Menu now is even cleaner and has more options.
-- Should work in Linux and OS X *(Not Tested)* as well.
+- Re-wrote all code from scratch (made more readable and understandable code then before).
+- Moved all the functions to separate file *(myfunctions.py)*.
+- Menu now is cleaner and has more options.
+- Should work in Linux and OS X as well *(Not Tested)*.
 - Your won't ever see an traceback.
 
-## Screen-shots
+## Code in Action *Screenshots*
 
 #### Code in Action
 
+<!-- Add a gif of code in action HERE-->
 ![](media/code-in-action-pic.png "Screenshot.")
-
 
 #### Sample output file in Markdown file format
 
@@ -67,8 +66,8 @@ I was bored and wanted to read The Bhagavad Gita.
 ![](media/text-more.png "Screenshot of output file in text format.")
 
 ## What's Coming
-- [ ] Add to program Read Me
-- [ ] Download Original verse audio
+- [ ] Add Readme file
+- [ ] Retrieve and download Original verse audio
 
 ---
 \# The End.
