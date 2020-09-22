@@ -23,7 +23,7 @@ The above command will install following pacakages.
 
 ### 2. Run `main.py` and follow along
 
-    python3 main.py
+    python main.py
 
 ## Feature List
 
