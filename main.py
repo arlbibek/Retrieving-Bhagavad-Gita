@@ -3,7 +3,7 @@ try:
     import requests
 except ImportError:
     print('Requirement unsatisfied!')
-    print("Do 'pip install -r requirements.txt'")
+    print("Do 'pip3 install -r requirements.txt'")
     exit()
 
 import myfunctions as fn
