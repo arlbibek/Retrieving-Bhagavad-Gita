@@ -3,6 +3,7 @@ try:
     import requests
 except ImportError:
     print('Requirement unsatisfied!')
+    print('- beautifulsoup4\n- requests')
     print("Do 'pip3 install -r requirements.txt'")
     exit()
 
@@ -16,7 +17,7 @@ main_url = "https://www.holy-bhagavad-gita.org"
 info = {1: 47, 2: 72, 3: 43, 4: 42, 5: 29, 6: 47, 7: 30, 8: 28, 9: 34,
         10: 42, 11: 55, 12: 20, 13: 35, 14: 27, 15: 20, 16: 24, 17: 28, 18: 78}
 
-# list of all available
+# list of all available options
 options = {}
 options[1] = "Read Me"
 options[2] = "Sample"
@@ -134,6 +135,7 @@ if not selected_option == 6:
     if selected_option == 3:
         print(f'Retrieved all {sum(info.values())} verses from 18 chapters.')
 
+print('[ Done ]')
 exit('Bye..')
 
 # The End.
