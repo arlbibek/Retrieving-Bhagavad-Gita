@@ -7,13 +7,13 @@ I was bored and wanted to read The Bhagavad Gita.
 
 ## Usage
 
-### Install Python 3.6 or higher.
+### Install Python 3.6+.
 
 *Go to python [Download Page](https://www.python.org/downloads/ "Go to python download page to download the latest version of python.").*
 
 ### 1. Install requirements
 
-        pip install -r requirements.txt
+        pip3 install -r requirements.txt
 
 >*PIP is a cross-platform package manager for installing and managing Python packages (which can be found in the Python Package Index)*
 
@@ -23,7 +23,7 @@ The above command will install following pacakages.
 
 ### 2. Run `main.py` and follow along
 
-    python main.py
+    python3 main.py
 
 ## Feature List
 
